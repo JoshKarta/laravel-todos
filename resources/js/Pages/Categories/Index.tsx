@@ -1,11 +1,21 @@
 import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
+import Modal from "@/Components/Modal";
 import TextInput from "@/Components/TextInput";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Button } from "@/Shadcn/ui/button";
-import { PageProps, User } from "@/types";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/Shadcn/ui/dialog";
+import { User } from "@/types";
 import { Head, useForm } from "@inertiajs/react";
-import React from "react";
+import React, { useState } from "react";
 import { Toaster, toast } from "sonner";
 
 type TCategory = {
@@ -45,6 +55,7 @@ export default function Index({
                                 }: TCategory) => (
                                     <SingleCategory
                                         key={category_id}
+                                        category_id={category_id}
                                         created_at={created_at}
                                         category_name={category_name}
                                         category_color={category_color}
@@ -114,11 +125,11 @@ function AddCategory() {
 }
 
 function SingleCategory({
+    category_id,
     category_name,
     created_at,
     category_color,
 }: TCategory) {
-    console.log(category_color);
     const date = new Date(created_at);
     const dateOptions: Intl.DateTimeFormatOptions = {
         year: "numeric",
@@ -130,12 +141,51 @@ function SingleCategory({
     };
     const formattedCreatedAt = date.toLocaleDateString(undefined, dateOptions);
 
+    const form = useForm();
+    const deleteCategory = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        form.delete(route("categories.destroy", category_id));
+    };
+
     return (
         <div className="border border-neutral-300 rounded-lg p-4 flex flex-col gap-2">
-            <div
-                className="w-full h-3 rounded-full"
-                style={{ backgroundColor: category_color }}
-            ></div>
+            <div className="flex items-center gap-4">
+                <div
+                    className="w-full h-3 rounded-full"
+                    style={{ backgroundColor: category_color }}
+                ></div>
+                <Dialog>
+                    <DialogTrigger>&middot;&middot;&middot;</DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>
+                                Do you want to delete this category ?
+                            </DialogTitle>
+                            <DialogDescription>
+                                This action cannot be undone. This will
+                                permanently delete your Category and remove your
+                                data from our servers.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <form onSubmit={deleteCategory}>
+                            <DialogFooter className="justify-end">
+                                <Button size={"sm"} type="submit">
+                                    Confirm
+                                </Button>
+                                <DialogClose asChild>
+                                    <Button
+                                        size={"sm"}
+                                        type="button"
+                                        variant="secondary"
+                                    >
+                                        Close
+                                    </Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </form>
+                    </DialogContent>
+                </Dialog>
+            </div>
             <p className="text-xs text-end">{formattedCreatedAt}</p>
             <p className="text-lg">{category_name}</p>
         </div>

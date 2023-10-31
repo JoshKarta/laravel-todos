@@ -17,7 +17,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::resource('categories', CategoryController::class)->only(['index', 'store']);
+Route::resource('categories', CategoryController::class)->only(['index', 'store', 'destroy']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
