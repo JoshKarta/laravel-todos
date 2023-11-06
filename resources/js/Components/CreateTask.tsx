@@ -87,15 +87,9 @@ export default function CreateTask({
                         }
                     >
                         <SelectTrigger className="w-[200px] focus:ring-indigo-500 self-start border-neutral-300">
-                            <SelectValue
-                                placeholder={
-                                    findCategory(categories, data.category_id)
-                                        ?.category_name
-                                }
-                            >
-                                {data.category_id !== 0
-                                    ? selectedValueLabel.category_name
-                                    : "Category"}
+                            <SelectValue placeholder="Category">
+                                {findCategory(categories, data.category_id)
+                                    ?.category_name || "Category"}
                             </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
