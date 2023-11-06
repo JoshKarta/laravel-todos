@@ -14,16 +14,10 @@ import {
     DialogTrigger,
 } from "@/Shadcn/ui/dialog";
 import { User } from "@/types";
+import { TCategory } from "@/types/appTypes";
 import { Head, useForm } from "@inertiajs/react";
 import React, { useState } from "react";
 import { Toaster, toast } from "sonner";
-
-type TCategory = {
-    category_id?: number;
-    category_name: string;
-    category_color?: string;
-    created_at: string;
-};
 
 export default function Index({
     auth,

@@ -11,7 +11,8 @@ class Task extends Model
 
     protected $table = 'tasks';
 
-    protected $primmaryKey = "task_id";
+    public const CREATED_AT = 'created_at';
+    public const UPDATED_AT = 'updated_at';
 
     protected $fillable = [
         "task_name",

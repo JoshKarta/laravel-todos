@@ -19,7 +19,7 @@ use Inertia\Inertia;
 */
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store', 'destroy']);
-Route::resource('tasks', TaskController::class)->only(['index', 'store', 'destroy']);
+Route::resource('tasks', TaskController::class)->only(['index', 'store', 'destroy', 'update']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

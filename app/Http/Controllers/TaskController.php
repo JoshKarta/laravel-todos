@@ -12,7 +12,8 @@ class TaskController extends Controller
     public function index()
     {
         return inertia('Tasks/Index', [
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'tasks'      => Task::all()
         ]);
     }
 
@@ -27,5 +28,12 @@ class TaskController extends Controller
         Task::create($request->all());
 
         return redirect(route('tasks.index'));
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $task->update($request->except(['due_date']));
+        $task->save();
+        // return redirect(route('tasks.index'));
     }
 }

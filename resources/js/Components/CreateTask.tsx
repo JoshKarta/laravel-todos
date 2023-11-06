@@ -13,6 +13,7 @@ import InputLabel from "./InputLabel";
 import { FormEvent } from "react";
 import { toast } from "sonner";
 import { User } from "@/types";
+import { findCategory, selectCategories } from "@/lib/utils";
 
 type TCatergory = {
     category_id: number;
@@ -33,19 +34,6 @@ export default function CreateTask({
         completed: false,
     });
 
-    const selectCategories = categories.map(
-        ({
-            category_id,
-            category_name,
-        }: {
-            category_id: number;
-            category_name: string;
-        }) => ({
-            value: category_id,
-            label: category_name,
-        })
-    );
-
     const selectedValueLabel = categories.find(
         (el: TCatergory) => el.category_id === data.category_id
     );
@@ -62,7 +50,7 @@ export default function CreateTask({
     };
 
     return (
-        <div className="w-full p-4 rounded-lg">
+        <div className="w-full rounded-lg">
             <h1 className="text-center font-medium text-xl">
                 Create a new Task
             </h1>
@@ -72,7 +60,7 @@ export default function CreateTask({
                     <div className="flex flex-col w-full gap-2">
                         <textarea
                             value={data.task_name}
-                            placeholder="Category Name..."
+                            placeholder="Task..."
                             className="bg-neutral-50/70 border border-neutral-300 rounded-lg w-full"
                             onChange={(e) =>
                                 setData("task_name", e.target.value)
@@ -99,14 +87,19 @@ export default function CreateTask({
                         }
                     >
                         <SelectTrigger className="w-[200px] focus:ring-indigo-500 self-start border-neutral-300">
-                            <SelectValue placeholder="Category">
+                            <SelectValue
+                                placeholder={
+                                    findCategory(categories, data.category_id)
+                                        ?.category_name
+                                }
+                            >
                                 {data.category_id !== 0
                                     ? selectedValueLabel.category_name
                                     : "Category"}
                             </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
-                            {selectCategories.map(
+                            {selectCategories(categories).map(
                                 (
                                     {
                                         value,
