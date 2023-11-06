@@ -28,7 +28,7 @@ export default function Index({
                         <p className="text-neutral-500 text-lg">
                             Current tasks
                         </p>
-                        <div className="grid gap-4 mt-2">
+                        <div className="grid grid-cols-2 gap-4 mt-2">
                             {tasks.map((task) => (
                                 <Task
                                     key={task.id}

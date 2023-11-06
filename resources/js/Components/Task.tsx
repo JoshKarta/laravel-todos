@@ -48,26 +48,11 @@ export default function Task({
                                     task={task}
                                 />
                             </DialogHeader>
-                            {/* <DialogFooter>
-                                <DialogClose asChild>
-                                    <div className="flex items-center gap-4">
-                                        <Button size={"sm"} type="submit">
-                                            Update
-                                        </Button>
-                                        <Button
-                                            size={"sm"}
-                                            type="button"
-                                            variant="secondary"
-                                        >
-                                            Close
-                                        </Button>
-                                    </div>
-                                </DialogClose>
-                            </DialogFooter> */}
                         </DialogContent>
                     </form>
                 </Dialog>
             </div>
+            <p className="text-neutral-400/70 text-lg">Task</p>
             <p>{task.task_name}</p>
             <Switch className="mt-2" checked={Boolean(task.completed)} />
         </div>
